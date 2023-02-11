@@ -1,1 +1,49 @@
-<p>dinamicos works!</p>
+<h2> Template: Dinamicos</h2>
+
+<form (ngSubmit)="guardar()"  #miFormulario="ngForm">
+    <!-- Nombre -->
+    <div class="mb-3 row">
+        <label  class="col-sm-3 col-form-label"> Nombre</label>
+        <div class="col-sm-9">
+            <input  [ngModel]="persona.nombre" name="nombre"
+                    class="form-control" type="text" placeholder="Nombre..." required>
+            <span   *ngIf="miFormulario?.form?.controls?.['nombre']?.errors
+                            && miFormulario?.form?.controls?.['nombre']?.touched "
+                    class="form-text text-danger ">El campo es obligatorio</span>
+        </div>
+    </div>
+
+    <!-- Agregar  -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9  mb-3">
+            <div class="input-group">
+                <input  [(ngModel)]="nuevoJuego" name="favorito"
+                        type="text" class="form-control" placeholder="Agregar favorito" required>
+                <button (click)="agregarFav()" [disabled]="miFormulario?.form?.controls?.['favorito']?.errors && miFormulario?.form?.controls?.['favorito']?.invalid " 
+                        class="btn btn-primary" type="button">Agregar</button>
+            </div>
+          </div> 
+    </div>
+
+    <!-- Favoritos -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9 mb-3">
+            <div *ngFor="let favorito of persona.favoritos; index as i" class="input-group  mb-2">
+                <input  
+                        [(ngModel)]="favorito.nombre"
+                        name="favorito_{{i}}"
+                        type="text" class="form-control" >
+                <button (click)="eliminarFav(i)" class="btn btn-primary" type="button">Eliminar</button>
+            </div>
+          </div> 
+    </div>
+
+    <div class="col">
+        <button (click)="guardar()" type="button" [disabled]="miFormulario.invalid" class="btn btn-primary float-end">Enviar</button>
+    </div>
+</form>
+
+<span>Persona</span>
+<pre> {{persona | json }} </pre>
