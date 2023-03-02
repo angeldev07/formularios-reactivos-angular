@@ -1,1 +1,54 @@
-<p>dinamicos works!</p>
+<h2> Reactivos: Dinamicos</h2>
+
+<form (ngSubmit)="guardar()" [formGroup]="miFormulario" >
+    <!-- Nombre -->
+    <div class="mb-3 row">
+        <label  class="col-sm-3 col-form-label"> Nombre</label>
+        <div class="col-sm-9">
+            <input  name="nombre"
+                    class="form-control" type="text" placeholder="Nombre..." 
+                    formControlName="nombre">
+            <span   *ngIf="isValid('nombre')"
+                    class="form-text text-danger ">El campo es obligatorio</span>
+        </div>
+    </div>
+
+    <!-- Agregar  -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Agregar</label>
+        <div class="col-sm-9  mb-3">
+            <div class="input-group">
+                <input  [formControl]="nuevoJuego"
+                        (keyup.enter)="agregar()"
+                        type="text" class="form-control" placeholder="Agregar favorito" >
+                <button  (click)="agregar()"  class="btn btn-primary" type="button">Agregar</button>
+            </div>
+          </div> 
+    </div>
+
+    <!-- Favoritos -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favoritos</label>
+        <div class="col-sm-9 mb-3 " formArrayName="favoritos">
+            <div  *ngFor="let fav of favoritosArr.controls; index as i"  
+                  class="input-group  mb-2">
+                <input  [formControlName]="i"
+                        type="text" class="form-control" >
+                <button (click)="borrar(i)" class="btn btn-danger" type="button">Eliminar</button>
+            </div>
+        </div> 
+    </div>
+
+    <div class="col">
+        <button (click)="guardar()"  type="button" class="btn btn-primary float-end">Enviar</button>
+    </div>
+</form>
+
+<span>Fomulario</span>
+<pre> {{ miFormulario.valid}} </pre>
+
+<span>Fomulario</span>
+<pre> {{ miFormulario.value | json}} </pre>
+
+<span>Nuevo Juego</span>
+<pre> {{ nuevoJuego.value | json }} </pre>
